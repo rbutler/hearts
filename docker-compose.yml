@@ -1,0 +1,5 @@
+hearts:
+  build: .
+  command: 'dist/build/hearts/hearts'
+  ports: 
+    - '3000:3000'
