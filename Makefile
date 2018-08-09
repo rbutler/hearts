@@ -20,3 +20,14 @@ release-image: build-with-stack-docker
 
 build-with-stack-docker:
 	stack image container
+
+build-dir:
+	stack install --local-bin-path bin
+
+build-ci-image:
+	GITCOMMIT=${GITCOMMIT} docker-compose build ${SERVICE_NAME}-image
+
+push-ci-image:
+	GITCOMMIT=${GITCOMMIT} docker-compose push ${SERVICE_NAME}-image
+
+publish-ci-image: build-ci-image push-ci-image

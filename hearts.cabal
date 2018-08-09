@@ -74,6 +74,7 @@ library
       Handler.Common
       Handler.Home
       Handler.Profile
+      Handler.Stats
       Import
       Import.NoFoundation
       Model

@@ -1,5 +1,17 @@
-hearts:
-  build: .
-  command: 'dist/build/hearts/hearts'
-  ports: 
-    - '3000:3000'
+version: '2.1'
+
+services:
+  hearts:
+    build: .
+    command: 'dist/build/hearts/hearts'
+    ports: 
+      - '3000:3000'
+    links:
+      - database
+  hearts-image:
+    build: .
+    image: rbutler10/hearts:${GITCOMMIT:-latest}
+  database:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
