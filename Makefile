@@ -2,7 +2,7 @@
 GITCOMMIT := $(shell git rev-parse HEAD 2>/dev/null)
 SERVICE_NAME := hearts
 
-.PHONY: run docker-run build-image release-image build-with-stack-docker
+.PHONY: run docker-run build-image release-image build-with-stack-docker build
 run:
 	stack exec -- yesod devel
 
@@ -31,3 +31,6 @@ push-ci-image:
 	GITCOMMIT=${GITCOMMIT} docker-compose push ${SERVICE_NAME}-image
 
 publish-ci-image: build-ci-image push-ci-image
+
+build:
+	stack build

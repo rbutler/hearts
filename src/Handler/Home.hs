@@ -28,6 +28,7 @@ getHomeR = do
     let submission = Nothing :: Maybe FileForm
         handlerName = "getHomeR" :: Text
     allComments <- runDB $ getAllComments
+    allStats <- runDB $ getAllStats
 
     defaultLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
@@ -43,6 +44,7 @@ postHomeR = do
             FormSuccess res -> Just res
             _ -> Nothing
     allComments <- runDB $ getAllComments
+    allStats <- runDB $ getAllStats
 
     defaultLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
@@ -68,6 +70,9 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
 
 commentIds :: (Text, Text, Text)
 commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
+
+getAllStats :: DB [Entity Stats]
+getAllStats = selectList [] [Asc StatsId]
 
 getAllComments :: DB [Entity Comment]
 getAllComments = selectList [] [Asc CommentId]
