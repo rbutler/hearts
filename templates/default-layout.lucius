@@ -74,3 +74,23 @@
 #message {
     margin-bottom: 40px;
 }
+
+table.hearts {
+    text-align: center;
+}
+
+.hearts th {
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.hearts td {
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.main {
+    background-color: #f442d9;
+    color: white;
+}
