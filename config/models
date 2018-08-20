@@ -17,11 +17,12 @@ Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived
     deriving Eq
     deriving Show
 GMUser json
-    ident Text
     name Text
-    UniqueGMUser ident
     deriving Typeable
+Run json
+    recordedAt UTCTime
 Stats json
+    runId RunId
     gmuserId GMUserId
     hearts Int
     messageCount Int
@@ -29,6 +30,5 @@ Stats json
     heartsPerPost Double
     heartsRatio Double
     rating Double
-    recordedAt UTCTime
-    UniqueStats gmuserId recordedAt
+    UniqueStats runId gmuserId
     deriving Show

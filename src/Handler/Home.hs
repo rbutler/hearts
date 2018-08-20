@@ -28,7 +28,7 @@ getHomeR = do
     let submission = Nothing :: Maybe FileForm
         handlerName = "getHomeR" :: Text
     allComments <- runDB $ getAllComments
-    allStats <- runDB $ getAllStats
+    lastStats <- runDB $ getLastStats
 
     defaultLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
@@ -44,7 +44,7 @@ postHomeR = do
             FormSuccess res -> Just res
             _ -> Nothing
     allComments <- runDB $ getAllComments
-    allStats <- runDB $ getAllStats
+    lastStats <- runDB $ getLastStats
 
     defaultLayout $ do
         let (commentFormId, commentTextareaId, commentListId) = commentIds
@@ -71,8 +71,43 @@ sampleForm = renderBootstrap3 BootstrapBasicForm $ FileForm
 commentIds :: (Text, Text, Text)
 commentIds = ("js-commentForm", "js-createCommentTextarea", "js-commentList")
 
-getAllStats :: DB [Entity Stats]
-getAllStats = selectList [] [Asc StatsId]
+{-
+getLastStats :: DB [Entity Stats]
+getLastStats = selectList [StatsRunId ==. latestRun] [Asc StatsId]
+  where latestRun = case getLatestRun of
+                      Nothing -> 0
+                      Just (Entity runId run) -> runId
+  --lastRun <- runDB $ selectList [StatsRunId ==. getLatestRun] [Asc StatsId]
+  --where sid = return (selectFirst [] [] :: [Run])
+
+--getLatestRun :: DB (Maybe(Entity Run ))
+getLatestRun =
+  lift $ runDB $ selectFirst [] [Desc RunId]
+-}
+
+getLastStats :: DB [Entity Stats]
+getLastStats = do
+  run <- selectFirst [] [Desc RunId]
+  let Entity runId _ = case run of
+                        Just r -> r
+                        Nothing -> error "No such run"
+  selectList [StatsRunId ==. runId] [Asc StatsId]
+
+
+{--
+getPhotos uid = do
+    photos <- runDB $ selectList [PhotoUser ==. uid] []
+  return (photos :: [Entity Photo])
+
+getAppHomeR :: Handler Html
+getAppHomeR = do
+    aid <- requireAuthId
+  photos <- getPhotos aid
+  defaultLayout $ do
+        setTitle "Welcome To Yesod!"
+    $(widgetFile "app/home")
+--}
+
 
 getAllComments :: DB [Entity Comment]
 getAllComments = selectList [] [Asc CommentId]

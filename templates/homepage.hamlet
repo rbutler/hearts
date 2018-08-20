@@ -21,7 +21,7 @@
         <th>Hearts per post
         <th>Hearts Ratio
         <th>Hearts given
-      $forall stat <- allStats
+      $forall stat <- lastStats
         <tr>
           <td>TODO - get name here
           <td>#{statsRating $ entityVal stat}
