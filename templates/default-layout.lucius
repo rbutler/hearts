@@ -94,3 +94,9 @@ table.hearts {
     background-color: #f442d9;
     color: white;
 }
+
+footer{
+    width: 100%;
+    background-color: #f442d9;
+    color: white;
+}
