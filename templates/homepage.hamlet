@@ -11,6 +11,9 @@
 <div .masthead>
   <div .container>
     <!-- Hearts list -->
+    <h2>
+      Most recent collusion rankings based on groupme hearts
+      <br>
 
     <table .hearts>
       <tr>
@@ -22,12 +25,5 @@
         <th>Hearts Ratio
         <th>Hearts given
       $forall stat <- lastStats
-        <tr>
-          <td>TODO - get name here
-          <td>#{statsRating $ entityVal stat}
-          <td>#{statsHearts $ entityVal stat}
-          <td>#{statsMessageCount $ entityVal stat}
-          <td>#{statsHeartsPerPost $ entityVal stat}
-          <td>#{statsHeartsRatio $ entityVal stat}
-          <td>#{statsHeartsGiven $ entityVal stat}
+        ^{showStats stat}
     

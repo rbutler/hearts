@@ -1,8 +1,14 @@
 {-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE EmptyDataDecls             #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GADTs                      #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses      #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE QuasiQuotes                #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
+{-# LANGUAGE ViewPatterns               #-}
 module Handler.Home where
 
 import Import
@@ -35,6 +41,29 @@ getHomeR = do
         aDomId <- newIdent
         setTitle "Heartcore Collusion"
         $(widgetFile "homepage")
+
+showStats :: Entity Stats -> Widget
+showStats (Entity statId stat) = do
+  gmUser <- handlerToWidget $ runDB $ get404 $ statsGmuserId stat
+  [whamlet|
+      <tr>
+        <td>#{gMUserName gmUser}
+        <td>#{statsRating stat}
+        <td>#{statsHearts stat}
+        <td>#{statsMessageCount stat}
+        <td>#{statsHeartsPerPost stat}
+        <td>#{statsHeartsRatio stat}
+        <td>#{statsHeartsGiven stat}
+  |]
+
+
+getLastStats :: DB [Entity Stats]
+getLastStats = do
+  run <- selectFirst [] [Desc RunId]
+  let Entity runId _ = case run of
+                        Just r -> r
+                        Nothing -> error "No such run"
+  selectList [StatsRunId ==. runId] [Asc StatsId]
 
 postHomeR :: Handler Html
 postHomeR = do
@@ -84,14 +113,6 @@ getLastStats = selectList [StatsRunId ==. latestRun] [Asc StatsId]
 getLatestRun =
   lift $ runDB $ selectFirst [] [Desc RunId]
 -}
-
-getLastStats :: DB [Entity Stats]
-getLastStats = do
-  run <- selectFirst [] [Desc RunId]
-  let Entity runId _ = case run of
-                        Just r -> r
-                        Nothing -> error "No such run"
-  selectList [StatsRunId ==. runId] [Asc StatsId]
 
 
 {--
