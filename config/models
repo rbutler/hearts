@@ -17,6 +17,7 @@ Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived
     deriving Eq
     deriving Show
 GMUser json
+    gmid Int
     name Text
     deriving Typeable
 Run json

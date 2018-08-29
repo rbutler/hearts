@@ -96,8 +96,13 @@ table.hearts {
 }
 
 footer{
+    padding-top: 100px;
     width: 100%;
     background-color: #f442d9;
     color: white;
     min-height: 200px;
+}
+
+.spaceme {
+    margin-bottom: 50px;
 }

@@ -49,10 +49,9 @@ showStats (Entity statId stat) = do
       <tr>
         <td>#{gMUserName gmUser}
         <td>#{statsRating stat}
-        <td>#{statsHearts stat}
-        <td>#{statsMessageCount stat}
         <td>#{statsHeartsPerPost stat}
-        <td>#{statsHeartsRatio stat}
+        <td>#{statsMessageCount stat}
+        <td>#{statsHearts stat}
         <td>#{statsHeartsGiven stat}
   |]
 
@@ -63,7 +62,7 @@ getLastStats = do
   let Entity runId _ = case run of
                         Just r -> r
                         Nothing -> error "No such run"
-  selectList [StatsRunId ==. runId] [Asc StatsId]
+  selectList [StatsRunId ==. runId] [Desc StatsRating]
 
 postHomeR :: Handler Html
 postHomeR = do
@@ -132,3 +131,4 @@ getAppHomeR = do
 
 getAllComments :: DB [Entity Comment]
 getAllComments = selectList [] [Asc CommentId]
+
