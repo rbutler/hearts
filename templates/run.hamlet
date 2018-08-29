@@ -1,0 +1,23 @@
+<div .masthead>
+  <div .container>
+    <!-- Hearts list -->
+
+    <table .hearts>
+      <tr>
+        <th>Colluder
+        <th>Hearts
+        <th>Rating
+        <th>Message total
+        <th>Hearts per post
+        <th>Hearts Ratio
+        <th>Hearts given
+      $forall stat <- stats
+        <tr>
+          <td>TODO - get name here
+          <td>#{statsRating $ entityVal stat}
+          <td>#{statsHearts $ entityVal stat}
+          <td>#{statsMessageCount $ entityVal stat}
+          <td>#{statsHeartsPerPost $ entityVal stat}
+          <td>#{statsHeartsRatio $ entityVal stat}
+          <td>#{statsHeartsGiven $ entityVal stat}
+    

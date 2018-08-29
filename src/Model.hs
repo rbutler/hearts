@@ -19,3 +19,4 @@ import Database.Persist.Quasi
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
 
+
