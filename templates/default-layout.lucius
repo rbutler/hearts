@@ -77,6 +77,7 @@
 
 table.hearts {
     text-align: center;
+    width: 100%;
 }
 
 .hearts th {
@@ -105,4 +106,8 @@ footer{
 
 .spaceme {
     margin-bottom: 50px;
+}
+
+body {
+    background-color: #f442d9;
 }

@@ -48,11 +48,11 @@ showStats (Entity statId stat) = do
   [whamlet|
       <tr>
         <td>#{gMUserName gmUser}
-        <td>#{statsRating stat}
         <td>#{statsHeartsPerPost stat}
         <td>#{statsMessageCount stat}
         <td>#{statsHearts stat}
         <td>#{statsHeartsGiven stat}
+        <td>#{statsHeartsRatio stat}
   |]
 
 
@@ -62,7 +62,7 @@ getLastStats = do
   let Entity runId _ = case run of
                         Just r -> r
                         Nothing -> error "No such run"
-  selectList [StatsRunId ==. runId] [Desc StatsRating]
+  selectList [StatsRunId ==. runId] [Desc StatsHeartsPerPost]
 
 postHomeR :: Handler Html
 postHomeR = do

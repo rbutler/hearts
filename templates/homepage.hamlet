@@ -11,7 +11,7 @@
 <div .masthead>
   <div .container>
     <!-- Hearts list -->
-    <h2 .spaceme>
+    <h2>
       Most recent collusion rankings based on groupme hearts
       <br>
 
@@ -19,10 +19,10 @@
       <tr>
         <th>Colluder
         <th>Rating
-        <th>Hearts per post
         <th>Message total
         <th>Hearts received
         <th>Hearts given
+        <th>Hearts Ratio
       $forall stat <- lastStats
         ^{showStats stat}
     
