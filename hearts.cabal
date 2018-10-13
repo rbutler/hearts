@@ -75,6 +75,7 @@ library
       Handler.Home
       Handler.Profile
       Handler.Run
+      Handler.Stat
       Import
       Import.NoFoundation
       Model

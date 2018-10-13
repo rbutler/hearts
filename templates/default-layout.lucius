@@ -3,6 +3,19 @@
     background-color: #f442d9;
 }
 
+body {
+    background-color: #f442d9;
+}
+
+.breadcrumb {
+    background-color: #f442d9;
+    color: white;
+}
+
+.breadcrumb > .active {
+    color: white;
+}
+
 .navbar-default .navbar-nav > .active > a {
     background-color: transparent;
     border-bottom: 2px solid white;

@@ -12,4 +12,5 @@
 /comments CommentR POST
 
 /profile ProfileR GET
-/run/#RunId RunR GET
+/runs/#RunId RunR GET
+/runs AllRunsR GET
