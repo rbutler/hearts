@@ -14,6 +14,7 @@ module Handler.Home where
 import Import
 import Yesod.Form.Bootstrap3 (BootstrapFormLayout (..), renderBootstrap3)
 import Text.Julius (RawJS (..))
+import Handler.Stat (showStats)
 
 -- Define our data that will be used for creating the form.
 data FileForm = FileForm
@@ -41,20 +42,6 @@ getHomeR = do
         aDomId <- newIdent
         setTitle "Heartcore Collusion"
         $(widgetFile "homepage")
-
-showStats :: Entity Stats -> Widget
-showStats (Entity statId stat) = do
-  gmUser <- handlerToWidget $ runDB $ get404 $ statsGmuserId stat
-  [whamlet|
-      <tr>
-        <td>#{gMUserName gmUser}
-        <td>#{statsHeartsPerPost stat}
-        <td>#{statsMessageCount stat}
-        <td>#{statsHearts stat}
-        <td>#{statsHeartsGiven stat}
-        <td>#{statsHeartsRatio stat}
-  |]
-
 
 getLastStats :: DB [Entity Stats]
 getLastStats = do

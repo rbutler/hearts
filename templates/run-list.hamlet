@@ -1,0 +1,10 @@
+<div .masthead>
+  <div .container>
+    <!-- Hearts list -->
+
+    <table .hearts>
+      <tr>
+        <th>Completed at
+      $forall run <- runs
+        <tr>
+          <td><a href=@{RunR $ entityKey run}>#{formatTime defaultTimeLocale "%F %X" $ runRecordedAt $ entityVal run}

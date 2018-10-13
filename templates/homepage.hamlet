@@ -25,4 +25,3 @@
         <th>Hearts Ratio
       $forall stat <- lastStats
         ^{showStats stat}
-    
