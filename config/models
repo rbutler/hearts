@@ -19,6 +19,7 @@ Comment json -- Adding "json" causes ToJSON and FromJSON instances to be derived
 GMUser json
     gmid Int
     name Text
+    bio Text "default=''"
     deriving Typeable
 Run json
     recordedAt UTCTime

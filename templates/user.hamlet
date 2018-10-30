@@ -1,4 +1,8 @@
 <div .masthead>
   <div .container>
-    #{gMUserName $ gmuser} 
-
+    <h2>Name
+    <p>
+      #{gMUserName $ gmuser} 
+    <h2>Bio
+    <p>
+      #{gMUserBio $ gmuser}
