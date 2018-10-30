@@ -1,0 +1,4 @@
+<div .masthead>
+  <div .container>
+    #{gMUserName $ gmuser} 
+
