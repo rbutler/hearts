@@ -16,3 +16,4 @@
 /runs AllRunsR GET
 
 /users/#GMUserId UserR GET
+/users AllUsersR GET
