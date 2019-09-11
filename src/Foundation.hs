@@ -36,6 +36,8 @@ data App = App
     , appConnPool    :: ConnectionPool -- ^ Database connection pool.
     , appHttpManager :: Manager
     , appLogger      :: Logger
+    , groupmeToken   :: String
+    , groupmeGroupID :: String
     }
 
 data MenuItem = MenuItem
@@ -168,6 +170,7 @@ instance Yesod App where
     isAuthorized RobotsR _ = return Authorized
     isAuthorized (RunR _) _ = return Authorized
     isAuthorized AllRunsR _ = return Authorized
+    isAuthorized UpdateRunsR _ = return Authorized
     isAuthorized (UserR _) _ = return Authorized
     isAuthorized AllUsersR _ = return Authorized
     isAuthorized (StaticR _) _ = return Authorized
