@@ -35,9 +35,9 @@ getAllRunsR = do
 
 getUpdateRunsR :: Handler Value
 getUpdateRunsR = do
-  messages <- getMessagesFromGroupme []
-  let stats = generateStats messages
-  returnJson $ messages
+  msgs <- getMessagesFromGroupme []
+  let stats = generateStats msgs
+  returnJson $ stats
   --let stats = statsFromMessages
   --createRun
   -- inserst stats for run
@@ -120,9 +120,50 @@ getMessagesFromGroupme acc = do
                          [] -> ""
                          x -> "&before_id=" ++ (Handler.Run.id $ P.last x)
 
---instance ToJSON Message where
-  --toJSON m = object
-    --[ "name" .= name Message ]
+data Stat = Stat
+  { sUserID :: String
+  , sUserName :: String
+  , messageCount :: Int
+  , heartsReceived :: Int
+  , heartsGiven :: Int
+  } deriving (Generic, Show)
+instance FromJSON Stat
+instance ToJSON Stat
+
+updateStats :: Message -> Maybe Stat -> Maybe Stat
+updateStats m l
+  | (Nothing) <- l =  Just Stat
+                       { sUserID = userID m
+                       , sUserName = name m 
+                       , messageCount = 1
+                       , heartsReceived = length $ favoritedBy m
+                       , heartsGiven = 0
+                       }
+  | (Just s) <-  l = Just Stat
+                        { sUserID = sUserID s
+                        , sUserName = sUserName s
+                        , messageCount = (messageCount s) + 1
+                        , heartsReceived = (heartsReceived s) + (length $ favoritedBy m)
+                        , heartsGiven = 0
+                        }
+
+addStats :: Map.Map String Stat -> [Message] -> Map.Map String Stat
+addStats statsMap msgs
+  | [] <- msgs = statsMap
+  | (m:ms) <- msgs = do
+      let updated = Map.alter (updateStats m) (userID m) statsMap
+      addStats updated ms
+  
+  
+
+groupedMessages msgs = do
+  let initialMap = Map.empty :: Map.Map String Stat
+  addStats initialMap msgs
+
+generateStats msgs = do
+  let g = groupedMessages msgs
+  g
+
 {-
 getMessagesFromGroupme :: Handler MessageResponse
 getMessagesFromGroupme = do
@@ -143,32 +184,3 @@ getLimitedMessages acc = do
                          [] -> ""
                          x -> "&before_id=" ++ (Handler.Run.id $ last x)
 -}
-
-data Stat = Stat
-  { sUserID :: String
-  , sUserName :: String
-  , messages :: Int
-  , heartsReceived :: Int
-  , heartsGiven :: Int
-
-updateValue :: Maybe Stat -> Message -> Maybe Stat
-updateValue
-  | Nothing m = Just Stat
-  | (Just s) m = Just Stat
-                    { sUserID = sUserID s
-                    , sUserName = sUserName 
-                    , messages = (messages s) + 1
-                    , heartsReceived = (heartsReceived s) + (length $ favoritedBy)
-                    }
-  
-
-groupedMessages messages =
-  let m - Map.empty :: Map string Stat
-  
-
-generateStats messages = do
-  let g = groupedMessages messages
-  
-  
-
-
