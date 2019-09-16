@@ -26,9 +26,11 @@ build-dir:
 
 build-ci-image:
 	GITCOMMIT=${GITCOMMIT} docker-compose build ${SERVICE_NAME}-image
+	docker-compose build ${SERVICE_NAME}-image
 
 push-ci-image:
 	GITCOMMIT=${GITCOMMIT} docker-compose push ${SERVICE_NAME}-image
+	docker-compose push ${SERVICE_NAME}-image
 
 publish-ci-image: build-ci-image push-ci-image
 
