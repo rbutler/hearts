@@ -20,10 +20,11 @@ showStats (Entity statId stat) = do
   [whamlet|
       <tr>
         <td>#{gMUserName gmUser}
-        <td>#{showFFloat (Just 2) (statsHeartsPerPost stat) ""}
+        <td>#{formatDecimal statsHeartsPerPost stat}
         <td>#{statsMessageCount stat}
         <td>#{statsHearts stat}
         <td>#{statsHeartsGiven stat}
-        <td>#{statsHeartsRatio stat}
+        <td>#{formatDecimal statsHeartsRatio stat}
   |]
-
+  where
+    formatDecimal f s = showFFloat (Just 2) (f s) ""
