@@ -7,11 +7,10 @@
     <table .hearts>
       <tr>
         <th>Colluder
-        <th>Hearts
         <th>Rating
         <th>Message total
-        <th>Hearts per post
-        <th>Hearts Ratio
+        <th>Hearts received
         <th>Hearts given
+        <th>Hearts Ratio
       $forall stat <- stats
         ^{showStats stat}

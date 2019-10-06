@@ -23,7 +23,7 @@ import qualified Data.Text as T
 getRunR :: RunId -> Handler Html
 getRunR runId = do
   run <- runDB $ get404 runId
-  stats <- runDB $ selectList [StatsRunId ==. runId] [Desc StatsGmuserId]
+  stats <- runDB $ selectList [StatsRunId ==. runId] [Desc StatsHeartsPerPost]
   defaultLayout $ do
     aDomId <- newIdent
     setTitle "Collusion stats"
@@ -190,25 +190,3 @@ insertRunStats runID stats
                        , statsRating = fromIntegral (heartsReceived s) / fromIntegral (messageCount s)
                        }
     insertRunStats runID xs
-  
-
-{-
-getMessagesFromGroupme :: Handler MessageResponse
-getMessagesFromGroupme = do
-  return $ getLimitedMessages []
-
-getLimitedMessages acc = do
-  App {..} <- getYesod
-  let limit = 100
-      endpoint = "GET https://api.groupme.com/v3/groups/" ++ groupmeGroupID ++ "/messages?token=" ++ groupmeToken ++ "&limit=" ++ show limit ++ beforeParams
-  request <- parseRequest endpoint
-  resp <- httpJSON $ request
-  let body = getResponseBody resp :: MessageResponse
-      m = messages $ response body
-  return $ case m of
-             [] -> m
-             x -> x ++ (getLimitedMessages x)
-  where beforeParams = case acc of
-                         [] -> ""
-                         x -> "&before_id=" ++ (Handler.Run.id $ last x)
--}
