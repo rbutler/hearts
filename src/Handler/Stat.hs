@@ -12,6 +12,7 @@
 module Handler.Stat where
 
 import Import
+import Numeric
 
 showStats :: Entity Stats -> Widget
 showStats (Entity statId stat) = do
@@ -19,7 +20,7 @@ showStats (Entity statId stat) = do
   [whamlet|
       <tr>
         <td>#{gMUserName gmUser}
-        <td>#{statsHeartsPerPost stat}
+        <td>#{showFFloat (Just 2) (statsHeartsPerPost stat) ""}
         <td>#{statsMessageCount stat}
         <td>#{statsHearts stat}
         <td>#{statsHeartsGiven stat}
